@@ -1,4 +1,5 @@
 #include "track.h"
+#include "editor/interface.h"
 
 std::vector<Node> nodes;
 std::vector<Track> tracks;
@@ -89,6 +90,10 @@ int main() {
 
     while (window.isOpen()) {   // Main Loop
         sf::Event event;        // Event handler
+        if (event.type == sf::Event::Resized) {
+            sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
+            window.setView(sf::View(visibleArea));
+        }
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -97,6 +102,7 @@ int main() {
         window.clear(sf::Color::Black);
 
         drawScreen(window);
+        displayEditorInterface(window);
 
         window.display();
     }

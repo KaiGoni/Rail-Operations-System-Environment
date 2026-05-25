@@ -1,8 +1,6 @@
 #include "panel.h"
 
 void Panel::draw(sf::RenderWindow &window) {
-    if (!active) return;
-
     sf::Vector2u windowSize = window.getSize();
     sf::Vector2f panelPos = pos;
     switch (anchor) {
@@ -43,4 +41,9 @@ void Panel::draw(sf::RenderWindow &window) {
     rect.setOutlineColor(borderColor);
     rect.setOutlineThickness(1.f);
     window.draw(rect);
+}
+
+void Panel::setPos(sf::Vector2f pos, sf::Vector2f size) {
+    this->size = size;
+    this->pos = pos;
 }

@@ -1,0 +1,8 @@
+#ifndef RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_INTERFACE_H
+#define RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_INTERFACE_H
+
+#include <SFML/Graphics.hpp>
+
+void displayEditorInterface(sf::RenderWindow &window);
+
+#endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_INTERFACE_H

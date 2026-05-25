@@ -6,14 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(SFML 2.6 COMPONENTS system window graphics REQUIRED)
 
 add_executable(Rail_Operations_System_Environment
-        main.cpp
-        main.cpp
-        track.h
-        track.cpp
-        editor/interface.cpp
-        editor/interface.h
-        panel.cpp
-        panel.h
+        src/main.cpp
+        src/track.h
+        src/track.cpp
+        src/editor/interface.cpp
+        src/editor/interface.h
+        src/panel.cpp
+        src/panel.h
 )
 
 target_link_libraries(Rail_Operations_System_Environment sfml-system sfml-window sfml-graphics)

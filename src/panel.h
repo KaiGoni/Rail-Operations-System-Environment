@@ -24,12 +24,12 @@ private:
     sf::Color backgroundColor;
     sf::Color borderColor;
 public:
-    Panel(sf::Vector2i size, sf::Vector2i pos, Anchor anchor = Anchor::None, sf::Color backgroundColor = sf::Color(50, 50, 50), sf::Color borderColor = sf::Color(255, 255, 255))
+    Panel(sf::Vector2f size, sf::Vector2f pos, Anchor anchor = Anchor::None,
+            sf::Color backgroundColor = sf::Color(50, 50, 50), sf::Color borderColor = sf::Color(255, 255, 255))
             : size(size), pos(pos), anchor(anchor), backgroundColor(backgroundColor), borderColor(borderColor) {}
 
-    bool active = false;
-
     void draw(sf::RenderWindow &window);
+    void setPos(sf::Vector2f pos, sf::Vector2f size);
 };
 
 #endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_ANCHOR_H
