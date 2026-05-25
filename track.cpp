@@ -16,6 +16,7 @@ bool Track::validTrack() {
     if (trackType == TrackType::Bezier && !controlPoint) return false;
     return true;
 }
+
 void Track::buildSubnodes() { // Note: This might have issues with linear
     if (!validTrack()) return;
     subnodes.clear();
@@ -49,29 +50,36 @@ void Track::buildSubnodes() { // Note: This might have issues with linear
     cachedLength = totalLength;
     nodeCached = true;
 }
+
 float Track::length() {
     if (nodeCached) return cachedLength;
     if (!validTrack()) return -1.0f;
     buildSubnodes();
     return cachedLength;
 }
+
 sf::Vector2f Track::getPos(float dist) {
     if (!validTrack()) return sf::Vector2f(0.f, 0.f);
     if (trackType == TrackType::Linear) {
         float t = dist / std::sqrt(std::pow(endNode->pos.x - startNode->pos.x, 2) + std::pow(endNode->pos.y - startNode->pos.y, 2));
         return startNode->pos + t * (endNode->pos - startNode->pos);
-    } else if (trackType == TrackType::Bezier)
-    {
+    } else if (trackType == TrackType::Bezier) {
         if (!nodeCached) buildSubnodes();
+        sf::Vector2f prev = startNode->pos;
         for (const auto& point : subnodes) {
-            if (point.length >= dist) {
-                return point.pos;
+            if (point.length >= dist) { // interpolate pos
+                sf::Vector2f dir = prev - point.pos;
+                sf::Vector2f unitDir = dir / std::hypot(dir.x, dir.y);
+                float diff = point.length - dist;
+                return point.pos + diff * unitDir;
             }
+            prev = point.pos;
         }
         return endNode->pos; // If distance exceeds track length, return end position
     }
     return sf::Vector2f(0.f, 0.f);
 }
+
 float Track::getAngle(float dist) {
     if (!validTrack()) return -1.0f;
     if (trackType == TrackType::Linear) {

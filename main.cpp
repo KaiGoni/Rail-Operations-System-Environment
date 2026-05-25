@@ -1,9 +1,7 @@
 #include "track.h"
 
-
 std::vector<Node> nodes;
 std::vector<Track> tracks;
-
 
 void drawNode(sf::RenderWindow& window, const Node& node) {
     sf::CircleShape circle(6.f);

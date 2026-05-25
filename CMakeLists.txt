@@ -10,6 +10,10 @@ add_executable(Rail_Operations_System_Environment
         main.cpp
         track.h
         track.cpp
+        editor/interface.cpp
+        editor/interface.h
+        panel.cpp
+        panel.h
 )
 
 target_link_libraries(Rail_Operations_System_Environment sfml-system sfml-window sfml-graphics)
