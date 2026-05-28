@@ -48,7 +48,8 @@ void Panel::draw(sf::RenderWindow &window) {
 
     // Draw elements
     for (auto& element : elements) {
-        element->draw(window);
+        bool isSelected = selected == element;
+        element->draw(window, isSelected);
     }
 }
 
@@ -68,12 +69,12 @@ void Panel::findElementWidth() {
 
 void Panel::setElementPos() {
     if (layout == Layout::Vertical) {
-        float current = panelPos.y;
+        float current = panelPos.y + verticalPadding;
 
         for (auto& element : elements) {
             element->computeSize(size, layout);
-            element->setPosition(sf::Vector2f(panelPos.x, current));
-            current += element->size.y;
+            element->setPosition(sf::Vector2f(panelPos.x + verticalPadding, current));
+            current += element->size.y + verticalPadding;
         }
     } else {
         // Center align by getting center x value, then offset by half of the element width
@@ -81,12 +82,25 @@ void Panel::setElementPos() {
         float current = panelPos.x + (size.x - elementWidth) / 2;
 
         for (auto& element : elements) {
-            element->setPosition(sf::Vector2f(current, panelPos.y));
-            current += element->size.x;
+            element->setPosition(sf::Vector2f(current, panelPos.y + (horizontalPadding/2)));
+            current += element->size.x + horizontalPadding;
         }
     }
 }
 
 void Panel::addElement(Element* element) {
     elements.push_back(element);
+}
+
+void Panel::checkHovered(sf::Vector2f mousePos) {
+    for (auto& element : elements) {
+        element->checkHovered(mousePos);
+    }
+}
+void Panel::checkClicked(sf::Event& event) {
+    for (auto& element : elements) {
+        if (element->detectClick(event)) {
+            selected = element;
+        }
+    }
 }

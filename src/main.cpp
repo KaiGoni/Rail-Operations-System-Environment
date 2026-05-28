@@ -101,6 +101,12 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            if (event.type == sf::Event::MouseMoved) {
+                editor.onMouseMoved(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+            }
+            if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::MouseButtonReleased) {
+                editor.onMouseClicked(event);
+            }
         }
         window.clear(sf::Color::Black);
 

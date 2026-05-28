@@ -40,6 +40,8 @@ public:
     void findElementWidth();
     void setElementPos();
     void addElement(Element* element);
+    void checkHovered(sf::Vector2f mousePos);
+    void checkClicked(sf::Event& event);
 };
 
 #endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_ANCHOR_H

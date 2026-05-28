@@ -15,3 +15,14 @@ void PanelManager::onWindowResized(sf::RenderWindow& window) {
         panel->setPos(window);
     }
 }
+void PanelManager::checkHovered(sf::Vector2f mousePos) {
+    for (auto& panel : panels) {
+        panel->checkHovered(mousePos);
+    }
+}
+
+void PanelManager::mouseClicked(sf::Event& event) {
+    for (auto& panel : panels) {
+        panel->checkClicked(event);
+    }
+}

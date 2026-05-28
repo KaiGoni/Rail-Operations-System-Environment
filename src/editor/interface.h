@@ -10,6 +10,11 @@ private:
     Panel* toolbar;
     Panel* info;
     Panel* options;
+
+    ButtonElement* buildRail;
+    ButtonElement* buildSignal;
+    NavItem* rail_straightRail;
+    NavItem* rail_curvedRail;
 public:
     EditorInterface(sf::RenderWindow &window) {
         toolbar = new Panel(sf::Vector2f(window.getSize().x, 40.f), sf::Vector2f(0.f, 0.f), Anchor::TopLeft, Layout::Horizontal);
@@ -19,6 +24,16 @@ public:
         panelManager.addPanel(toolbar);
         panelManager.addPanel(options);
         panelManager.addPanel(info);
+
+        buildRail   = new ButtonElement("temp");
+        buildSignal = new ButtonElement("temp");
+        rail_straightRail   = new NavItem("temp");
+        rail_curvedRail     = new NavItem("temp");
+
+        toolbar->addElement(buildRail);
+        toolbar->addElement(buildSignal);
+        options->addElement(rail_straightRail);
+        options->addElement(rail_curvedRail);
 
         panelManager.onWindowResized(window);
     }
@@ -30,6 +45,12 @@ public:
     void onScreenResized(sf::RenderWindow &window) {
         panelManager.onWindowResized(window);
         toolbar->resize(sf::Vector2f(0.f, 0.f), sf::Vector2f(window.getSize().x, 40.f));
+    }
+    void onMouseMoved(sf::Vector2f mousePos) {
+        panelManager.checkHovered(mousePos);
+    }
+    void onMouseClicked(sf::Event& event) {
+        panelManager.mouseClicked(event);
     }
 };
 
