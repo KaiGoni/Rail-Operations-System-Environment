@@ -1,5 +1,6 @@
 #include "track.h"
 #include "editor/interface.h"
+#include "gui/panelManager.h"
 
 std::vector<Node> nodes;
 std::vector<Track> tracks;
@@ -84,17 +85,19 @@ int main() {
     t2.trackType = Track::TrackType::Bezier;
     t2.controlPoint = sf::Vector2f(800, 700);
 
-
     nodes = {a, b, c};
     tracks = {t1, t2};
 
+    EditorInterface editor(window);
+
     while (window.isOpen()) {   // Main Loop
         sf::Event event;        // Event handler
-        if (event.type == sf::Event::Resized) {
-            sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
-            window.setView(sf::View(visibleArea));
-        }
         while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Resized) {
+                sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+                editor.onScreenResized(window);
+            }
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
@@ -102,7 +105,7 @@ int main() {
         window.clear(sf::Color::Black);
 
         drawScreen(window);
-        displayEditorInterface(window);
+        editor.draw(window);
 
         window.display();
     }
