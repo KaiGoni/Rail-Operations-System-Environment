@@ -56,6 +56,7 @@ void Panel::draw(sf::RenderWindow &window) {
 void Panel::resize(sf::Vector2f pos, sf::Vector2f size) {
     this->size = size;
     this->pos = pos;
+    setElementPos();
 }
 
 void Panel::findElementWidth() {
@@ -65,6 +66,7 @@ void Panel::findElementWidth() {
         element->computeSize(size, layout);
         elementWidth += element->size.x;
     }
+    elementWidth += horizontalPadding;
 }
 
 void Panel::setElementPos() {

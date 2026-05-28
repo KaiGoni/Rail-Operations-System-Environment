@@ -1,6 +1,7 @@
 #include "track.h"
 #include "editor/interface.h"
 #include "gui/panelManager.h"
+#include "textureManager.h"
 
 std::vector<Node> nodes;
 std::vector<Track> tracks;
@@ -88,7 +89,8 @@ int main() {
     nodes = {a, b, c};
     tracks = {t1, t2};
 
-    EditorInterface editor(window);
+    TextureManager textureManager;
+    EditorInterface editor(window, textureManager);
 
     while (window.isOpen()) {   // Main Loop
         sf::Event event;        // Event handler

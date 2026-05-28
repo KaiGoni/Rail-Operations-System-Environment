@@ -4,9 +4,7 @@
 #include <SFML/Window.hpp>
 #include <string>
 #include <vector>
-
-const float horizontalPadding = 10;
-const float verticalPadding = 5;
+#include "uiConstants.h"
 
 enum class Layout {
     Horizontal,
@@ -29,15 +27,15 @@ public:
 
 class ButtonElement : public Element {
 public:
-    ButtonElement(std::string imgsrc) : imageSource(imgsrc) {
+    ButtonElement(sf::Sprite image) : icon(image) {
         interactable = true;
     }
-    std::string imageSource;
+    sf::Sprite icon;
 
     // Size: Square Ratio, takes up as much space in panel as needed
     void computeSize(sf::Vector2f parentSize, Layout layout) override{
         // Set both width and height to parent height
-        size = sf::Vector2f(parentSize.y - 10, parentSize.y - horizontalPadding);
+        size = sf::Vector2f(parentSize.y - horizontalPadding, parentSize.y - horizontalPadding);
     }
 
     void draw(sf::RenderWindow& window, bool selected) override {
@@ -45,8 +43,20 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
-            rect.setFillColor(selected ? sf::Color(100, 100, 255) : (hovered ? sf::Color(150, 150, 255) : sf::Color(200, 200, 255)));
+        icon.setScale(
+            size.x / icon.getLocalBounds().width,
+            size.y / icon.getLocalBounds().height
+        );
+        icon.setPosition(position);
+        if (selected) {
+            rect.setFillColor(sf::Color(100, 100, 255));
+        } else if (hovered) {
+            rect.setFillColor(sf::Color(150, 150, 255));
+        } else {
+            rect.setFillColor(sf::Color(200, 200, 255));
+        }
         window.draw(rect);
+        window.draw(icon);
     }
 };
 
@@ -73,10 +83,10 @@ public:
 
 class NavItem : public Element {
 public:
-    NavItem(std::string imgsrc) : imageSource(imgsrc) {
+    NavItem(sf::Sprite image) : icon(image) {
         interactable = true;
     }
-    std::string imageSource;
+    sf::Sprite icon;
     std::string text;
 
     // Size: 20px height, full width
@@ -89,7 +99,13 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
-        rect.setFillColor(selected ? sf::Color(100, 100, 255) : (hovered ? sf::Color(150, 150, 255) : sf::Color(200, 200, 255)));
+        if (selected) {
+            rect.setFillColor(sf::Color(100, 100, 255));
+        } else if (hovered) {
+            rect.setFillColor(sf::Color(150, 150, 255));
+        } else {
+            rect.setFillColor(sf::Color(200, 200, 255));
+        }
         window.draw(rect);
     }
 };
@@ -109,7 +125,7 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
-        rect.setFillColor(sf::Color(100, 100, 100)); // Just a flat color
+        rect.setFillColor(sf::Color(100, 100, 100));
         window.draw(rect);
     }
 };

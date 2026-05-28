@@ -1,5 +1,5 @@
-#ifndef RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_ANCHOR_H
-#define RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_ANCHOR_H
+#ifndef RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_H
+#define RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_H
 
 #include <SFML/Graphics.hpp>
 #include "elements.h"
@@ -26,7 +26,7 @@ private:
     sf::Color backgroundColor;
     sf::Color borderColor;
     Layout layout;
-    Element *selected;
+    Element *selected = nullptr;
     int elementWidth;
     std::vector<Element *> elements;
 public:
@@ -44,4 +44,4 @@ public:
     void checkClicked(sf::Event& event);
 };
 
-#endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_ANCHOR_H
+#endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_PANEL_H

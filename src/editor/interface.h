@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../gui/panelManager.h"
+#include "../textureManager.h"
 
 class EditorInterface {
 private:
@@ -16,7 +17,7 @@ private:
     NavItem* rail_straightRail;
     NavItem* rail_curvedRail;
 public:
-    EditorInterface(sf::RenderWindow &window) {
+    EditorInterface(sf::RenderWindow &window, TextureManager &textureManager) {
         toolbar = new Panel(sf::Vector2f(window.getSize().x, 40.f), sf::Vector2f(0.f, 0.f), Anchor::TopLeft, Layout::Horizontal);
         options = new Panel(sf::Vector2f(80.f, 500.f), sf::Vector2f(0.f, 41.f), Anchor::TopLeft, Layout::Vertical);
         info    = new Panel(sf::Vector2f(160.f, 240.f), sf::Vector2f(0.f, 0.f), Anchor::Right, Layout::Vertical);
@@ -25,15 +26,21 @@ public:
         panelManager.addPanel(options);
         panelManager.addPanel(info);
 
-        buildRail   = new ButtonElement("temp");
-        buildSignal = new ButtonElement("temp");
-        rail_straightRail   = new NavItem("temp");
-        rail_curvedRail     = new NavItem("temp");
+        textureManager.createTexture("icons/BuildRail",   "../assets/icons/BuildRail.png");
+        textureManager.createTexture("icons/BuildSignal", "../assets/icons/BuildSignal.png");
+
+        sf::Sprite sprBuildRail(*textureManager.get("icons/BuildRail"));
+        sf::Sprite sprBuildSignal(*textureManager.get("icons/BuildSignal"));
+        // sf::Sprite sprStraightRail(*textureManager.get("icons/StraightRail"));
+        // sf::Sprite sprCurvedRail(*textureManager.get("icons/CurvedRail"));
+
+        buildRail   = new ButtonElement(sprBuildRail);
+        buildSignal = new ButtonElement(sprBuildSignal);
 
         toolbar->addElement(buildRail);
         toolbar->addElement(buildSignal);
-        options->addElement(rail_straightRail);
-        options->addElement(rail_curvedRail);
+        // options->addElement(rail_straightRail);
+        // options->addElement(rail_curvedRail);
 
         panelManager.onWindowResized(window);
     }

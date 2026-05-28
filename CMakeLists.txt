@@ -17,6 +17,9 @@ add_executable(Rail_Operations_System_Environment
         src/gui/elements.h
         src/gui/panelManager.cpp
         src/gui/panelManager.h
+        src/gui/uiConstants.h
+        src/textureManager.cpp
+        src/textureManager.h
 )
 
 target_link_libraries(Rail_Operations_System_Environment sfml-system sfml-window sfml-graphics)
