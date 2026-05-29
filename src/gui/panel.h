@@ -35,7 +35,7 @@ public:
             size(size), pos(pos), anchor(anchor), layout(layout), backgroundColor(backgroundColor), borderColor(borderColor) {}
 
     void draw(sf::RenderWindow &window);
-    void resize(sf::Vector2f pos, sf::Vector2f size);
+    void resize(sf::Vector2f pos, sf::Vector2f size, sf::RenderWindow &window);
     void setPos(sf::RenderWindow &window);
     void findElementWidth();
     void setElementPos();

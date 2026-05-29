@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "uiConstants.h"
+#include "../textureManager.h"
 
 enum class Layout {
     Horizontal,
@@ -49,11 +50,11 @@ public:
         );
         icon.setPosition(position);
         if (selected) {
-            rect.setFillColor(sf::Color(100, 100, 255));
+            rect.setFillColor(selectedColor);
         } else if (hovered) {
-            rect.setFillColor(sf::Color(150, 150, 255));
+            rect.setFillColor(hoveredColor);
         } else {
-            rect.setFillColor(sf::Color(200, 200, 255));
+            rect.setFillColor(unselectedColor);
         }
         window.draw(rect);
         window.draw(icon);
@@ -76,14 +77,15 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
-        rect.setFillColor(sf::Color(100, 100, 100));
+        rect.setFillColor(dividerColor);
         window.draw(rect);
     }
 };
 
 class NavItem : public Element {
 public:
-    NavItem(sf::Sprite image) : icon(image) {
+    NavItem(const sf::Sprite& image, const std::string& text)
+        : icon(image), text(text) {
         interactable = true;
     }
     sf::Sprite icon;
@@ -99,14 +101,27 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
+        icon.setScale(
+    size.y / icon.getLocalBounds().height,
+    size.y / icon.getLocalBounds().height
+        );
+        icon.setPosition(position);
+        sf::Text label;
+        label.setFont(textureManager.getFont());
+        label.setString(text);
+        label.setCharacterSize(size.y - 4);
+        label.setFillColor(textColor);
+        label.setPosition(position + sf::Vector2f(size.y + 2, 0));
         if (selected) {
-            rect.setFillColor(sf::Color(100, 100, 255));
+            rect.setFillColor(selectedColor);
         } else if (hovered) {
-            rect.setFillColor(sf::Color(150, 150, 255));
+            rect.setFillColor(hoveredColor);
         } else {
-            rect.setFillColor(sf::Color(200, 200, 255));
+            rect.setFillColor(unselectedColor);
         }
         window.draw(rect);
+        window.draw(icon);
+        window.draw(label);
     }
 };
 
@@ -125,7 +140,7 @@ public:
         sf::RectangleShape rect;
         rect.setSize(size);
         rect.setPosition(position);
-        rect.setFillColor(sf::Color(100, 100, 100));
+        rect.setFillColor(textColor);
         window.draw(rect);
     }
 };

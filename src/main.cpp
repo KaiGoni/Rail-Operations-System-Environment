@@ -62,35 +62,34 @@ void drawScreen(sf::RenderWindow &window) {
 int main() {
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Rail Operations System Environment");
 
-    // Temp tracks
-    Node a;
-    a.id = 1;
-    a.pos = {200, 300};
+    // // Temp tracks
+    // Node a;
+    // a.id = 1;
+    // a.pos = {200, 300};
+    //
+    // Node b;
+    // b.id = 2;
+    // b.pos = {600, 500};
+    //
+    // Node c;
+    // c.id = 3;
+    // c.pos = {1000, 200};
+    //
+    // Track t1;
+    // t1.startNode = &a;
+    // t1.endNode = &b;
+    // t1.trackType = Track::TrackType::Linear;
+    //
+    // Track t2;
+    // t2.startNode = &b;
+    // t2.endNode = &c;
+    // t2.trackType = Track::TrackType::Bezier;
+    // t2.controlPoint = sf::Vector2f(800, 700);
+    //
+    // nodes = {a, b, c};
+    // tracks = {t1, t2};
 
-    Node b;
-    b.id = 2;
-    b.pos = {600, 500};
-
-    Node c;
-    c.id = 3;
-    c.pos = {1000, 200};
-
-    Track t1;
-    t1.startNode = &a;
-    t1.endNode = &b;
-    t1.trackType = Track::TrackType::Linear;
-
-    Track t2;
-    t2.startNode = &b;
-    t2.endNode = &c;
-    t2.trackType = Track::TrackType::Bezier;
-    t2.controlPoint = sf::Vector2f(800, 700);
-
-    nodes = {a, b, c};
-    tracks = {t1, t2};
-
-    TextureManager textureManager;
-    EditorInterface editor(window, textureManager);
+    EditorInterface editor(window);
 
     while (window.isOpen()) {   // Main Loop
         sf::Event event;        // Event handler

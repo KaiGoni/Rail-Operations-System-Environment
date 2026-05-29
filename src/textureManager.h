@@ -9,7 +9,17 @@
 class TextureManager {
 private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures;
+    sf::Font defaultFont;
 public:
+    TextureManager() {
+        if (!defaultFont.loadFromFile("../assets/Inconsolata-Medium.ttf"))
+            throw std::runtime_error("Failed to load default font");
+    }
+
+    sf::Font& getFont() {
+        return defaultFont;
+    }
+
     bool createTexture(const std::string& name, const std::string& path) {
         auto tex = std::make_unique<sf::Texture>();
         if (!tex->loadFromFile(path))
@@ -23,5 +33,7 @@ public:
         return textures.at(name).get();
     }
 };
+
+extern TextureManager textureManager;
 
 #endif //RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_TEXTUREMANAGER_H

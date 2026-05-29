@@ -53,10 +53,11 @@ void Panel::draw(sf::RenderWindow &window) {
     }
 }
 
-void Panel::resize(sf::Vector2f pos, sf::Vector2f size) {
+void Panel::resize(sf::Vector2f pos, sf::Vector2f size, sf::RenderWindow &window) {
     this->size = size;
     this->pos = pos;
     setElementPos();
+    setPos(window);
 }
 
 void Panel::findElementWidth() {
