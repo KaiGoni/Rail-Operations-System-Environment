@@ -13,7 +13,7 @@ public:
     void draw(sf::RenderWindow &window);
     void onWindowResized(sf::RenderWindow &window);
     void checkHovered(sf::Vector2f mousePos);
-    void mouseClicked(sf::Event& event);
+    bool mouseClicked(sf::Event& event);
 };
 
 

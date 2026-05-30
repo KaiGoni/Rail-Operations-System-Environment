@@ -38,6 +38,7 @@ void Panel::setPos(sf::RenderWindow &window) {
 }
 
 void Panel::draw(sf::RenderWindow &window) {
+    if (!visible)return;
     sf::RectangleShape rect;
     rect.setSize(size);
     rect.setPosition(panelPos);
@@ -56,7 +57,6 @@ void Panel::draw(sf::RenderWindow &window) {
 void Panel::resize(sf::Vector2f pos, sf::Vector2f size, sf::RenderWindow &window) {
     this->size = size;
     this->pos = pos;
-    setElementPos();
     setPos(window);
 }
 
@@ -100,10 +100,15 @@ void Panel::checkHovered(sf::Vector2f mousePos) {
         element->checkHovered(mousePos);
     }
 }
-void Panel::checkClicked(sf::Event& event) {
-    for (auto& element : elements) {
-        if (element->detectClick(event)) {
+
+bool Panel::checkClicked(sf::Event& event) {
+    for (auto* element : elements) {
+        if (element->interactable && element->hovered &&            // Element is interactable and is hovered
+                    event.type == sf::Event::MouseButtonPressed &&  // Event is left click
+                    event.mouseButton.button == sf::Mouse::Left) {
             selected = element;
+            if (element->detectClick(event))return true;
         }
     }
+    return false;
 }

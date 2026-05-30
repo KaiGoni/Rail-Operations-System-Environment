@@ -13,13 +13,18 @@ add_executable(Rail_Operations_System_Environment
         src/editor/interface.h
         src/gui/panel.cpp
         src/gui/panel.h
-        src/gui/elements.cpp
-        src/gui/elements.h
+        src/gui/elements/Element.cpp
+        src/gui/elements/Element.h
         src/gui/panelManager.cpp
         src/gui/panelManager.h
         src/gui/uiConstants.h
         src/textureManager.cpp
         src/textureManager.h
+        src/gui/elements/buttonElement.h
+        src/gui/elements/navItem.h
+        src/gui/elements/text.h
+        src/gui/elements/divider.h
+        src/gui/elements.h
 )
 
 target_link_libraries(Rail_Operations_System_Environment sfml-system sfml-window sfml-graphics)

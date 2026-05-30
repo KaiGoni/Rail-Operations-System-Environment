@@ -2,6 +2,7 @@
 #define RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_INTERFACE_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "../gui/panelManager.h"
 #include "../textureManager.h"
 
@@ -9,44 +10,39 @@ class EditorInterface {
 private:
     PanelManager panelManager;
     Panel* toolbar;
+    Panel* buildRailOptions;
+    Panel* buildSignalOptions;
     Panel* info;
-    Panel* options;
 
     ButtonElement* buildRail;
     ButtonElement* buildSignal;
     NavItem* railLinear;
     NavItem* railLinearTangent;
+
+    enum class ActiveTool {
+        None,
+        BuildRail,
+        BuildSignal,
+    };
+
+    enum class ActiveOption {
+        None,
+        // BuildRail
+        RailLinear,
+        RailLinearTangent,
+        RailCurve,
+        RailCurveTangent,
+        // BuildSignal
+        // TBD
+    };
+
+    ActiveTool activeTool;
+    ActiveOption activeOption;
+
+    void init(sf::RenderWindow &window);
 public:
     EditorInterface(sf::RenderWindow &window) {
-        toolbar = new Panel(sf::Vector2f(window.getSize().x, 40.f), sf::Vector2f(0.f, 0.f), Anchor::TopLeft, Layout::Horizontal);
-        options = new Panel(sf::Vector2f(160.f, 500.f), sf::Vector2f(0.f, 41.f), Anchor::TopLeft, Layout::Vertical);
-        info    = new Panel(sf::Vector2f(160.f, 240.f), sf::Vector2f(0.f, 0.f), Anchor::Right, Layout::Vertical);
-
-        panelManager.addPanel(toolbar);
-        panelManager.addPanel(options);
-        panelManager.addPanel(info);
-
-        textureManager.createTexture("icons/BuildRail",   "../assets/icons/BuildRail.png");
-        textureManager.createTexture("icons/BuildSignal", "../assets/icons/BuildSignal.png");
-        textureManager.createTexture("icons/RailLinear", "../assets/icons/RailLinear.png");
-        textureManager.createTexture("icons/RailLinearTangent", "../assets/icons/RailLinearTangent.png");
-
-        sf::Sprite sprBuildRail(*textureManager.get("icons/BuildRail"));
-        sf::Sprite sprBuildSignal(*textureManager.get("icons/BuildSignal"));
-        sf::Sprite sprRailLinear(*textureManager.get("icons/RailLinear"));
-        sf::Sprite sprRailLinearTangent(*textureManager.get("icons/RailLinearTangent"));
-
-        buildRail   = new ButtonElement(sprBuildRail);
-        buildSignal = new ButtonElement(sprBuildSignal);
-        railLinear = new NavItem(sprRailLinear, "Straight Track");
-        railLinearTangent = new NavItem(sprRailLinearTangent, "Tan. Straight");
-
-        toolbar->addElement(new Divider);
-        toolbar->addElement(buildRail);
-        toolbar->addElement(buildSignal);
-        options->addElement(railLinear);
-        options->addElement(railLinearTangent);
-
+        init(window);
         panelManager.onWindowResized(window);
     }
 
@@ -54,6 +50,8 @@ public:
         panelManager.draw(window);
     }
 
+
+    // Event Behavior
     void onScreenResized(sf::RenderWindow &window) {
         panelManager.onWindowResized(window);
         toolbar->resize(sf::Vector2f(0.f, 0.f), sf::Vector2f(window.getSize().x, 40.f), window);

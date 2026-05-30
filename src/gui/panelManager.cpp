@@ -21,8 +21,9 @@ void PanelManager::checkHovered(sf::Vector2f mousePos) {
     }
 }
 
-void PanelManager::mouseClicked(sf::Event& event) {
+bool PanelManager::mouseClicked(sf::Event& event) {
     for (auto& panel : panels) {
-        panel->checkClicked(event);
+        if (panel->checkClicked(event))return true;
     }
+    return false;
 }

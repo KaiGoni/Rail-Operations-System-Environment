@@ -10,6 +10,11 @@ class TextureManager {
 private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures;
     sf::Font defaultFont;
+
+    // Redundant function now
+    sf::Texture* get(const std::string& name) {
+        return textures.at(name).get();
+    }
 public:
     TextureManager() {
         if (!defaultFont.loadFromFile("../assets/Inconsolata-Medium.ttf"))
@@ -28,9 +33,10 @@ public:
         return true;
     }
 
-    // Returns a pointer — caller must not outlive the TextureManager
-    sf::Texture* get(const std::string& name) {
-        return textures.at(name).get();
+    sf::Sprite makeSprite(const std::string& name) {
+        sf::Sprite sprite;
+        sprite.setTexture(*textures.at(name));
+        return sprite;
     }
 };
 
