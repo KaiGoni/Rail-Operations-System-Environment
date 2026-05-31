@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
 
 class TextureManager {
 private:
@@ -27,15 +28,23 @@ public:
 
     bool createTexture(const std::string& name, const std::string& path) {
         auto tex = std::make_unique<sf::Texture>();
-        if (!tex->loadFromFile(path))
+        if (!tex->loadFromFile(path)) {
+            std::cerr << "Failed to load texture: " << path << std::endl;
+            textures[name] = std::move(tex);
             return false;
+        }
         textures[name] = std::move(tex);
         return true;
     }
 
     sf::Sprite makeSprite(const std::string& name) {
         sf::Sprite sprite;
-        sprite.setTexture(*textures.at(name));
+        auto it = textures.find(name);
+        if (it == textures.end()) {
+            std::cerr << "makeSprite: texture not found: " << name << std::endl;
+            return sprite; // return empty sprite instead of crashing
+        }
+        sprite.setTexture(*it->second);
         return sprite;
     }
 };

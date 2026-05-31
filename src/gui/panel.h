@@ -26,7 +26,6 @@ private:
     sf::Color backgroundColor;
     sf::Color borderColor;
     Layout layout;
-    Element *selected = nullptr;
     int elementWidth;
     std::vector<Element *> elements;
 
@@ -40,6 +39,7 @@ public:
             elements(elements), visible(visible) {}
 
     bool visible;
+    Element *selected = nullptr;
 
     void draw(sf::RenderWindow &window);
     void resize(sf::Vector2f pos, sf::Vector2f size, sf::RenderWindow &window);

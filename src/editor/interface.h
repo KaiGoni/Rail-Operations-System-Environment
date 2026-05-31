@@ -2,9 +2,7 @@
 #define RAIL_OPERATIONS_SYSTEM_ENVIRONMENT_INTERFACE_H
 
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include "../gui/panelManager.h"
-#include "../textureManager.h"
 
 class EditorInterface {
 private:
@@ -36,10 +34,13 @@ private:
         // TBD
     };
 
-    ActiveTool activeTool;
-    ActiveOption activeOption;
+    ActiveTool activeTool = ActiveTool::None;
+    ActiveOption activeOption = ActiveOption::None;
 
     void init(sf::RenderWindow &window);
+
+    ButtonElement *createToolButton(const std::string& name, const std::string& iconPath, ActiveTool tool, Panel *ownPanel, std::vector<Panel*> optionPanels);
+    NavItem *createOption(const std::string& name, const std::string& iconPath, const std::string& text, ActiveOption option, Panel *ownPanel);
 public:
     EditorInterface(sf::RenderWindow &window) {
         init(window);
@@ -49,7 +50,6 @@ public:
     void draw(sf::RenderWindow &window) {
         panelManager.draw(window);
     }
-
 
     // Event Behavior
     void onScreenResized(sf::RenderWindow &window) {

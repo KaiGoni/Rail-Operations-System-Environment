@@ -103,12 +103,13 @@ void Panel::checkHovered(sf::Vector2f mousePos) {
 
 bool Panel::checkClicked(sf::Event& event) {
     for (auto* element : elements) {
-        if (element->interactable && element->hovered &&            // Element is interactable and is hovered
-                    event.type == sf::Event::MouseButtonPressed &&  // Event is left click
-                    event.mouseButton.button == sf::Mouse::Left) {
-            selected = element;
-            if (element->detectClick(event))return true;
+        if (element->detectClick(event)) { // If an element had successful click
+            if (selected == element) selected = nullptr;
+            else selected = element;
+            return true;
         }
     }
+    // If click on panel, also return true
+    if (sf::FloatRect(pos.x, pos.y, size.x, size.y).contains(event.mouseButton.x, event.mouseButton.y)) return true;
     return false;
 }
